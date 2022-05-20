@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { Button } from './components/Button';
-import { MovieCard } from './components/MovieCard';
-
 import { SideBar } from './components/SideBar';
 import { Content } from './components/Content';
 
@@ -12,7 +9,23 @@ import './styles/global.scss';
 
 import './styles/sidebar.scss';
 import './styles/content.scss';
-import { GenreResponseProps, MovieProps } from './@types/GenreResponseProps';
+
+interface GenreResponseProps {
+  id: number;
+  name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+  title: string;
+}
+
+interface MovieProps {
+  imdbID: string;
+  Title: string;
+  Poster: string;
+  Ratings: Array<{
+    Source: string;
+    Value: string;
+  }>;
+  Runtime: string;
+}
 
 export function App() {
   const [selectedGenreId, setSelectedGenreId] = useState(1);
@@ -44,8 +57,16 @@ export function App() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <SideBar selectedGenreId={selectedGenreId} handleClickButton={handleClickButton} genres={genres}/>
-      <Content selectedGenre={selectedGenre} movies={movies}/>
+      <SideBar
+        genres={genres}
+        selectedGenreId={selectedGenreId}
+        buttonClickCallback={handleClickButton}
+      />
+
+      <Content
+        selectedGenre={selectedGenre}
+        movies={movies}
+      />
     </div>
   )
 }
