@@ -12,3 +12,4 @@ export function App() {
     </div>
   )
 }
+//o App é o pai comum dos dois componentes
