@@ -1,29 +1,38 @@
-import { GenreResponseProps } from "../@types/GenreResponseProps";
-import { Button } from "./Button";
+import { MovieCard } from "./MovieCard";
 
-interface sidebarProps{
-  handleClickButton:(id:number)=>void;
-  selectedGenreId: number;
-  genres: GenreResponseProps[]
+interface ContentProps {
+  selectedGenre: {
+    id: number;
+    name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+    title: string;
+  };
+
+  movies: Array<{
+    imdbID: string;
+    Title: string;
+    Poster: string;
+    Ratings: Array<{
+      Source: string;
+      Value: string;
+    }>;
+    Runtime: string;
+  }>;
 }
-export function SideBar({handleClickButton, selectedGenreId, genres}:sidebarProps) {
 
+export function Content({ selectedGenre, movies }: ContentProps) {
   return (
-    <nav className="sidebar">
-        <span>Watch<p>Me</p></span>
+    <div className="container">
+      <header>
+        <span className="category">Categoria:<span> {selectedGenre.title}</span></span>
+      </header>
 
-        <div className="buttons-container">
-          {genres.map(genre => (
-            <Button
-              key={String(genre.id)}
-              title={genre.title}
-              iconName={genre.name}
-              onClick={() => handleClickButton(genre.id)}
-              selected={selectedGenreId === genre.id}
-            />
+      <main>
+        <div className="movies-list">
+          {movies.map(movie => (
+            <MovieCard key={movie.imdbID} title={movie.Title} poster={movie.Poster} runtime={movie.Runtime} rating={movie.Ratings[0].Value} />
           ))}
         </div>
-
-    </nav>
+      </main>
+    </div>
   )
 }
