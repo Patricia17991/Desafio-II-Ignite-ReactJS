@@ -13,3 +13,4 @@ export function App() {
   )
 }
 //o App é o pai comum dos dois componentes
+//os estados vão ficar dentro do App.tsx
